@@ -18,46 +18,46 @@ from pdfminer.pdfpage import PDFPage
 class MpdfClass:
   def __init__(self):
     root = tk.Tk()
-    root.title('PDF merger D')
+    root.title('PDF merger')
     root.geometry("500x680")
 
-    button_1 = tk.Button(root, text='参照するエクセルファイルを選択', font=('', 20),
-                        width=29, height=1, bg='#999999', activebackground="#aaaaaa")
+    button_1 = tk.Button(root, text='Excel file refered', font=('', 20),
+                width=24, height=1, bg='#999999', activebackground="#aaaaaa")
     button_1.bind('<ButtonPress>', self.file_dialog_1)
     button_1.pack(pady=40)
 
     self.file_name_1 = tk.StringVar()
-    self.file_name_1.set('未選択です')
+    self.file_name_1.set('no file selected')
     label_1 = tk.Label(textvariable=self.file_name_1, font=('', 12))
     label_1.pack(pady=0)
 
-    button_2 = tk.Button(root, text='参照するフォルダーを選択', font=('', 20),
-                        width=24, height=1, bg='#999999', activebackground="#aaaaaa")
+    button_2 = tk.Button(root, text='folder refered', font=('', 20),
+                width=24, height=1, bg='#999999', activebackground="#aaaaaa")
     button_2.bind('<ButtonPress>', self.folder_dialog_2)
     button_2.pack(pady=40)
 
     self.folder_name_2 = tk.StringVar()
-    self.folder_name_2.set('未選択です')
+    self.folder_name_2.set('no folder selected')
     label_2 = tk.Label(textvariable=self.folder_name_2, font=('', 12))
     label_2.pack(pady=10)
     
-    button_3 = tk.Button(root, text='出力先フォルダーを選択', font=('', 20),
+    button_3 = tk.Button(root, text='output the file into', font=('', 20),
                 width=24, height=1, bg='#999999', activebackground="#aaaaaa")
     button_3.bind('<ButtonPress>', self.folder_dialog_3)
     button_3.pack(pady=40)
 
     self.folder_name_3 = tk.StringVar()
-    self.folder_name_3.set('未選択です')
+    self.folder_name_3.set('no folder selected')
     label_3 = tk.Label(textvariable=self.folder_name_3, font=('', 12))
     label_3.pack(pady=10)
     
-    button_4 = tk.Button(root, text='スタート', font=('', 20),
+    button_4 = tk.Button(root, text='START', font=('', 20),
                 width=10, height=1, bg='#999999', activebackground="#aaaaaa")
     button_4.bind('<ButtonPress>', self.merge_pdf_4)
     button_4.pack(pady=40)
 
     self.status_4 = tk.StringVar()
-    self.status_4.set('待機中')
+    self.status_4.set('waiting')
     label_4 = tk.Label(textvariable=self.status_4, font=('', 12))
     label_4.pack(pady=10)
 
@@ -69,7 +69,7 @@ class MpdfClass:
     global file_name_1
     file_name_1 = tk.filedialog.askopenfilename(filetypes=fTyp, initialdir="C:")
     if len(file_name_1) == 0:
-      self.file_name_1.set('選択をキャンセルしました')
+      self.file_name_1.set('selected file canceled')
     else:
       self.file_name_1.set(file_name_1)
 
@@ -77,7 +77,7 @@ class MpdfClass:
     global folder_name_2
     folder_name_2 = tk.filedialog.askdirectory(initialdir="C:")
     if len(folder_name_2) == 0:
-      self.folder_name_2.set('選択をキャンセルしました')
+      self.folder_name_2.set('selected folder canceled')
     else:
       self.folder_name_2.set(folder_name_2)
 
@@ -85,7 +85,7 @@ class MpdfClass:
     global folder_name_3
     folder_name_3 = tk.filedialog.askdirectory(initialdir="C:")
     if len(folder_name_3) == 0:
-      self.folder_name_3.set('選択をキャンセルしました')
+      self.folder_name_3.set('selected folder canceled')
     else:
       self.folder_name_3.set(folder_name_3)
 
@@ -96,7 +96,7 @@ class MpdfClass:
       day_file='*.pdf'
       dst_folder=folder_name_3
 
-      self.status_4.set('進行中…')
+      self.status_4.set('processing…')
 
       df = pd.read_excel(xlsx_file, sheet_name=0, header=None)
       _df = df.iloc[0:df.shape[0]+1, 0]
@@ -160,10 +160,10 @@ class MpdfClass:
 
       os.remove(tmp)
 
-      self.status_4.set('完了しました')
+      self.status_4.set('done')
     
     except NameError:
-      self.status_4.set('選択漏れがあります')
+      self.status_4.set('item(s) remaining to be selected')
     
 if __name__ == '__main__':
   MpdfClass()
